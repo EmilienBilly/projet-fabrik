@@ -2,13 +2,14 @@ require("dotenv").config();
 
 const express = require("express");
 const metiersRoutes = require("./routes/metiers");
+const cors = require("cors");
 
 // Express app
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use((req, res, next) => {
-    console.log("passing middleware");
     next();
 });
 
@@ -16,8 +17,6 @@ app.use((req, res, next) => {
 app.use("/api/metiers", metiersRoutes);
 
 // listen for requests
-app.listen(process.env.PORT, () => {
-    console.log("listening on port 4000");
-});
+app.listen(process.env.PORT, () => {});
 
 process.env;

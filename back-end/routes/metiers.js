@@ -8,7 +8,6 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     try {
         const results = await db.query("select * from jobs;");
-        console.log(results);
         res.json({
             results: results.rows.length,
             data: {
@@ -30,7 +29,7 @@ router.get("/:id", async (req, res) => {
         console.log(results.rows[0]);
         res.json({
             data: {
-                restaurants: results.rows[0],
+                jobs: results.rows[0],
             },
         });
     } catch (err) {
