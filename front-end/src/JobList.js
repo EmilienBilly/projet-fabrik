@@ -122,9 +122,9 @@ const JobList = (props) => {
                         <StyledJobTitleWrapper layout animate={isOpen ? "visible" : "hidden"} variants={JobContainer} initial="hidden" exit="exit">
                             {jobs.map((job) => (
                                 <motion.div layout variants={JobItems} key={job.id}>
-                                    <StyledLink to={`/${job.title}`}>
+                                    <StyledLink to={`/${job.id}`}>
                                         <StyledJobTitle $linearGradient={linearGradient}>
-                                            <span>{job.title}</span>
+                                            <span>{job.name}</span>
                                         </StyledJobTitle>
                                     </StyledLink>
                                 </motion.div>

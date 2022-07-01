@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
+import JobsFinder from "./api/JobsFinder";
 
 const colors = {
     alimentation: "#85B36B;",
@@ -14,18 +15,18 @@ const colors = {
 
 const handleColor = (categorie) => {
     switch (categorie) {
-        case "alimentation":
+        case 1:
             return colors.alimentation;
-        case "restauration":
-            return colors.restauration;
-        case "batiment":
-            return colors.batiment;
-        case "services":
-            return colors.services;
-        case "metaux":
+        case 2:
             return colors.metaux;
-        case "mecanique":
+        case 3:
             return colors.mecanique;
+        case 4:
+            return colors.batiment;
+        case 5:
+            return colors.services;
+        case 6:
+            return colors.restauration;
         default:
             return "";
     }
@@ -208,32 +209,32 @@ const StyledButtons = styled.div`
 `;
 
 const JobDetails = () => {
-    const { titre } = useParams();
+    const { id } = useParams();
     const [jobs, setJobs] = useState([]);
-    const job = jobs.find((job) => job.title === titre);
+    const [degrees, setDegrees] = useState([]);
 
     useEffect(() => {
-        fetchJobs();
+        const fetchData = async () => {
+            const response = await JobsFinder.get(`/${id}`);
+            setJobs(response.data.data.jobs);
+            setDegrees(response.data.data.degrees);
+        };
+        fetchData();
     }, []);
-
-    async function fetchJobs() {
-        const { data } = await supabase.from("metiers").select("*");
-        setJobs(data);
-    }
 
     return (
         <>
             <Navbar />
             {/* Conditional templating to avoid TypeError */}
-            {job && (
+            {jobs && (
                 <StyledWrapper>
-                    <StyleJobTitle categorie={job.category}>{titre}</StyleJobTitle>
-                    <StyledJobDetails categorie={job.category}>
-                        <StyledDescription categorie={job.category}>
-                            <p>{job.description}</p>
+                    <StyleJobTitle categorie={jobs.category_id}>{jobs.name}</StyleJobTitle>
+                    <StyledJobDetails categorie={jobs.category_id}>
+                        <StyledDescription categorie={jobs.category_id}>
+                            <p>{jobs.description}</p>
                         </StyledDescription>
-                        <StyledImg categorie={job.category}>
-                            <img src={`/images/${titre}.jpg`} alt="" />
+                        <StyledImg categorie={jobs.category_id}>
+                            <img src={`/images/${jobs.name}.jpg`} alt="" />
                         </StyledImg>
                     </StyledJobDetails>
                     <StyledDiplomes>
@@ -241,26 +242,26 @@ const JobDetails = () => {
                             <h3>Découvre les formations</h3>
                             <img src="/images/logo-diplome.svg" alt="" />
                         </span>
-                        <StyledButtons categorie={job.category}>
-                            {job.diplomes.map((diplome, index) => (
-                                <a key={index} href={diplome.lien}>
+                        <StyledButtons categorie={jobs.category_id}>
+                            {degrees.map((degree, index) => (
+                                <a key={index} href={degree.link}>
                                     <button>
-                                        <span>{diplome.titre}</span>
+                                        <span>{degree.name}</span>
                                     </button>
                                 </a>
                             ))}
                         </StyledButtons>
                     </StyledDiplomes>
-                    <StyleddVideo>
+                    {/* <StyleddVideo>
                         <iframe
                             width="694"
                             height="359"
-                            src={job.video}
+                            src={jobs.video}
                             title="YouTube video player"
-                            frameborder="0"
+                            frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                    </StyleddVideo>
+                            allowFullScreen></iframe>
+                    </StyleddVideo> */}
                 </StyledWrapper>
             )}
         </>

@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
         res.json({
             results: results.rows.length,
             data: {
-                restaurants: results.rows,
+                jobs: results.rows,
             },
         });
     } catch (err) {
@@ -23,13 +23,16 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     console.log(req.params.id);
     try {
-        const results = await db.query("select * from jobs where id = $1", [req.params.id]); // parameterized query - [req.params.id] will replace $1
+        const jobsResults = await db.query("select * from jobs where id = $1", [req.params.id]); // parameterized query - [req.params.id] will replace $1
         // parameterized query is used to avoid string concatenation which can lead to sql injection vulnerabilities
 
-        console.log(results.rows[0]);
+        const degreesResults = await db.query("select * from degrees where job_id = $1", [req.params.id]);
+        console.log(degreesResults.rows);
+        // console.log(jobsResults.rows[0]);
         res.json({
             data: {
-                jobs: results.rows[0],
+                jobs: jobsResults.rows[0],
+                degrees: degreesResults.rows,
             },
         });
     } catch (err) {

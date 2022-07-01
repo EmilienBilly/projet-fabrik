@@ -92,7 +92,7 @@ const Home = () => {
         const fetchData = async () => {
             try {
                 const response = await JobsFinder.get("/");
-                console.log(response);
+                setJobs(response.data.data.jobs);
             } catch (err) {}
         };
         fetchData();
@@ -109,27 +109,22 @@ const Home = () => {
                 <AnimatePresence>
                     <Grid>
                         <LayoutGroup>
-                            <JobList
-                                layout
-                                colorBackground={backColor.alimentation}
-                                title="Alimentation"
-                                jobs={jobs.filter((job) => job.category === "alimentation")}
-                            />
+                            <JobList layout colorBackground={backColor.alimentation} title="Alimentation" jobs={jobs.filter((job) => job.category_id === 1)} />
                             <JobList
                                 layout
                                 colorBackground={backColor.hotellerie}
                                 title="Hôtellerie Restauration"
-                                jobs={jobs.filter((job) => job.category === "restauration")}
+                                jobs={jobs.filter((job) => job.category_id === 6)}
                             />
-                            <JobList layyout colorBackground={backColor.batiment} title="Bâtiment" jobs={jobs.filter((job) => job.category === "batiment")} />
+                            <JobList layyout colorBackground={backColor.batiment} title="Bâtiment" jobs={jobs.filter((job) => job.category_id === 4)} />
                             <JobList
                                 layout
                                 colorBackground={backColor.commerce}
                                 title="Commerces & Services"
-                                jobs={jobs.filter((job) => job.category === "services")}
+                                jobs={jobs.filter((job) => job.category_id === 5)}
                             />
-                            <JobList layout colorBackground={backColor.metaux} title="Métaux" jobs={jobs.filter((job) => job.category === "metaux")} />
-                            <JobList layout colorBackground={backColor.mecanique} title="Mécanique" jobs={jobs.filter((job) => job.category === "mecanique")} />
+                            <JobList layout colorBackground={backColor.metaux} title="Métaux" jobs={jobs.filter((job) => job.category_id === 2)} />
+                            <JobList layout colorBackground={backColor.mecanique} title="Mécanique" jobs={jobs.filter((job) => job.category_id === 3)} />
                         </LayoutGroup>
                     </Grid>
                 </AnimatePresence>
