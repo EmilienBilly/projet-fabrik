@@ -1,5 +1,5 @@
-import Home from "./Home";
-import JobDetails from "./JobDetails";
+import Home from "./routes/Home";
+import JobDetails from "./routes/JobDetails";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 

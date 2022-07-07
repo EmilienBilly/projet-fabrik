@@ -44,7 +44,6 @@ const StyledJobTitleWrapper = styled(motion.div)``;
 const StyledJobTitle = styled(motion.h3)`
     span {
         font-size: 1rem;
-        border-bottom: 2px solid white;
         background-size: 100% 3px;
     }
 

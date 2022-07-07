@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Navbar from "./Navbar";
-import JobsFinder from "./api/JobsFinder";
+import Navbar from "../components/Navbar";
+import JobsFinder from "../api/JobsFinder";
 
 const colors = {
     alimentation: "#85B36B;",

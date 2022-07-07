@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import JobList from "./JobList";
-import Navbar from "./Navbar";
+import JobList from "../components/JobList";
+import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
-import JobsFinder from "./api/JobsFinder";
+import JobsFinder from "../api/JobsFinder";
 
 const backColor = {
     alimentation: "#85B36B;",
