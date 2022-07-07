@@ -2,6 +2,7 @@ import Home from "./routes/Home";
 import JobDetails from "./routes/JobDetails";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import AdminPanel from "./routes/AdminPanel";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -30,6 +31,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/:id" element={<JobDetails />} />
+                    <Route path="/admin" element={<AdminPanel />} />
                 </Routes>
             </BrowserRouter>
         </>
