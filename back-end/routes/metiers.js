@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// GET one restaurant
+// GET one job
 router.get("/:id", async (req, res) => {
     console.log(req.params.id);
     try {
@@ -27,13 +27,44 @@ router.get("/:id", async (req, res) => {
         // parameterized query is used to avoid string concatenation which can lead to sql injection vulnerabilities
 
         const degreesResults = await db.query("select * from degrees where job_id = $1", [req.params.id]);
-        console.log(degreesResults.rows);
-        // console.log(jobsResults.rows[0]);
         res.json({
             data: {
                 jobs: jobsResults.rows[0],
                 degrees: degreesResults.rows,
             },
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// Create a job
+router.post("/", async (req, res) => {
+    console.log(req.body);
+
+    try {
+        const results = await db.query("INSERT INTO jobs (name, description, video, category_id) values ($1, $2, $3, $4) returning *", [
+            req.body.name,
+            req.body.description,
+            req.body.video,
+            req.body.category_id,
+        ]);
+        res.json({
+            data: {
+                jobs: results.rows[0],
+            },
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+// Delete a job
+router.delete("/:id", (req, res) => {
+    try {
+        const results = db.query("DELETE FROM jobs where id = $1", [req.params.id]);
+        res.json({
+            status: "success",
         });
     } catch (err) {
         console.log(err);

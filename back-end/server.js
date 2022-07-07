@@ -9,9 +9,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use((req, res, next) => {
-    next();
-});
+app.use(express.json())
 
 // Routes
 app.use("/api/metiers", metiersRoutes);
@@ -20,3 +18,4 @@ app.use("/api/metiers", metiersRoutes);
 app.listen(process.env.PORT, () => {});
 
 process.env;
+
