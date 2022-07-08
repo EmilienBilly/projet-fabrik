@@ -21,7 +21,6 @@ router.get("/", async (req, res) => {
 
 // GET one job
 router.get("/:id", async (req, res) => {
-    console.log(req.params.id);
     try {
         const jobsResults = await db.query("select * from jobs where id = $1", [req.params.id]); // parameterized query - [req.params.id] will replace $1
         // parameterized query is used to avoid string concatenation which can lead to sql injection vulnerabilities
@@ -40,7 +39,6 @@ router.get("/:id", async (req, res) => {
 
 // Create a job
 router.post("/", async (req, res) => {
-    console.log(req.body);
 
     try {
         const results = await db.query("INSERT INTO jobs (name, description, video, category_id) values ($1, $2, $3, $4) returning *", [

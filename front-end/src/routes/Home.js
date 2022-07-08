@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import JobList from "../components/JobList";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import JobsFinder from "../api/JobsFinder";
+import { JobsContext } from "../context/JobsContext";
 
 const backColor = {
     alimentation: "#85B36B;",
@@ -85,9 +86,9 @@ const Grid = styled.div`
     }
 `;
 
-const Home = () => {
-    const [jobs, setJobs] = useState([]);
-
+const Home = (props) => {
+    const { jobs, setJobs } = useContext(JobsContext);
+    console.log(jobs);
     useEffect(() => {
         const fetchData = async () => {
             try {
