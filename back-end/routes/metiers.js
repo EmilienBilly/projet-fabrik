@@ -7,11 +7,10 @@ const router = express.Router();
 // GET all the jobs
 router.get("/", async (req, res) => {
     try {
-        const results = await db.query("select * from jobs;");
+        const jobsResults = await db.query("SELECT jobs.*, categories.name AS category_name FROM jobs  JOIN categories ON categories.id = category_id;");
         res.json({
-            results: results.rows.length,
             data: {
-                jobs: results.rows,
+                jobs: jobsResults.rows,
             },
         });
     } catch (err) {
@@ -39,7 +38,6 @@ router.get("/:id", async (req, res) => {
 
 // Create a job
 router.post("/", async (req, res) => {
-
     try {
         const results = await db.query("INSERT INTO jobs (name, description, video, category_id) values ($1, $2, $3, $4) returning *", [
             req.body.name,

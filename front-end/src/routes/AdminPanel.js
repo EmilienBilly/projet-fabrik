@@ -2,6 +2,25 @@ import { useEffect, useState } from "react";
 import JobsFinder from "../api/JobsFinder";
 import Navbar from "../components/Navbar";
 
+const displayCategoryName = (category_id) => {
+    switch (categorie) {
+        case 1:
+            return colors.alimentation;
+        case 2:
+            return colors.metaux;
+        case 3:
+            return colors.mecanique;
+        case 4:
+            return colors.batiment;
+        case 5:
+            return colors.services;
+        case 6:
+            return colors.restauration;
+        default:
+            return "";
+    }
+};
+
 const AdminPanel = () => {
     const [jobs, setJobs] = useState([]);
     console.log(jobs);
@@ -33,10 +52,11 @@ const AdminPanel = () => {
                     <tbody>
                         {jobs &&
                             jobs.map((job) => (
-                                <tr>
+                                <tr key={job.id}>
                                     <td>{job.name}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{job.description.slice(0, 80)}</td>
+                                    {/* Displaying categories name with first letter in uppercase */}
+                                    <td>{job.category_name.charAt(0).toUpperCase() + job.category_name.slice(1)}</td>
                                     <td></td>
                                     <td></td>
                                 </tr>
