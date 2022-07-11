@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
         max-height: 100vh;
         font-family: 'Poppins', sans-serif;
         background: #242424;
+        color: #f8f9fa;
 
         #root {
             width: 100%;
