@@ -14,6 +14,7 @@ const StyledTableRow = styled.tr`
 
     td {
         padding: 0.8rem;
+        text-align: center;
     }
 `;
 
@@ -22,24 +23,6 @@ const StyledButton = styled.button`
     border: none;
     color: ${(props) => props.inputColor || "#a68b00"};
     background-color: ${(props) => props.inputBgColor || "#fff0c2"};
-`;
-
-const StyledForm = styled.form`
-    padding: 2rem 0;
-`;
-
-const StyledFormRow = styled.div`
-    display: flex;
-
-    div {
-        width: 100%;
-        margin-right: 1rem;
-
-        input {
-            width: 100%;
-            height: 30px;
-        }
-    }
 `;
 
 const JobsTable = () => {
