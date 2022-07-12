@@ -45,9 +45,10 @@ router.post("/", async (req, res) => {
             req.body.video,
             req.body.category_id,
         ]);
-        res.json({
+        res.status(201).json({
+            status: "success",
             data: {
-                jobs: results.rows[0],
+                job: results.rows[0],
             },
         });
     } catch (err) {

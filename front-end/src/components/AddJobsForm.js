@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import JobsFinder from "../api/JobsFinder";
+import { JobsContext } from "../context/JobsContext";
 
 const StyledForm = styled.form`
     padding: 2rem 0;
@@ -28,6 +29,7 @@ const StyledButton = styled.button`
 `;
 
 const AddJobsForm = () => {
+    const { addJobs } = useContext(JobsContext);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState(0);
@@ -41,6 +43,8 @@ const AddJobsForm = () => {
                 description: description,
                 category_id: category,
             });
+            //JobsContext function do add the newly added job into jobs state from context
+            addJobs(response.data.data.job);
             console.log(response);
         } catch (err) {}
     };

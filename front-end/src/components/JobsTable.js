@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import JobsFinder from "../api/JobsFinder";
 import styled from "styled-components";
+import { JobsContext } from "../context/JobsContext";
 
 const StyledTable = styled.table`
     margin: auto;
@@ -25,8 +26,9 @@ const StyledButton = styled.button`
     background-color: ${(props) => props.inputBgColor || "#fff0c2"};
 `;
 
-const JobsTable = () => {
-    const [jobs, setJobs] = useState([]);
+const JobsTable = (props) => {
+    // const [jobs, setJobs] = useState([]);
+    const { jobs, setJobs } = useContext(JobsContext);
     console.log(jobs);
 
     useEffect(() => {
@@ -67,7 +69,7 @@ const JobsTable = () => {
                             <td>{job.name}</td>
                             <td>{trimmedContent(job.description, 90) + "..."}</td>
                             {/* Displaying categories name with first letter in uppercase */}
-                            <td>{job.category_name.charAt(0).toUpperCase() + job.category_name.slice(1)}</td>
+                            <td>{job.category_name}</td>
                             <td>
                                 <StyledButton>Modifier</StyledButton>
                             </td>
