@@ -50,7 +50,12 @@ const JobsTable = (props) => {
     const handleDelete = async (id) => {
         try {
             const responseDeleted = await JobsFinder.delete(`/${id}`);
-        } catch {}
+            setJobs(
+                jobs.filter((jobs) => {
+                    return jobs.id !== id;
+                })
+            );
+        } catch (err) {}
     };
 
     return (
@@ -74,6 +79,7 @@ const JobsTable = (props) => {
                                 <StyledButton>Modifier</StyledButton>
                             </td>
                             <td>
+                                {/* Passing an arrow function avoid the handleDelete() function to be runned  right away and only when clicking the button*/}
                                 <StyledButton onClick={() => handleDelete(job.id)} inputColor="#c62828" inputBgColor="#ffcdd2">
                                     Supprimer
                                 </StyledButton>
