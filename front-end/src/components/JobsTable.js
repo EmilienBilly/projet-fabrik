@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import JobsFinder from "../api/JobsFinder";
 import styled from "styled-components";
 import { JobsContext } from "../context/JobsContext";
@@ -27,10 +28,8 @@ const StyledButton = styled.button`
 `;
 
 const JobsTable = (props) => {
-    // const [jobs, setJobs] = useState([]);
     const { jobs, setJobs } = useContext(JobsContext);
-    console.log(jobs);
-
+    let navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -58,6 +57,10 @@ const JobsTable = (props) => {
         } catch (err) {}
     };
 
+    const handleUpdate = (id) => {
+        navigate(`/admin/${id}/update`);
+    };
+
     return (
         <StyledTable>
             <thead>
@@ -76,7 +79,7 @@ const JobsTable = (props) => {
                             {/* Displaying categories name with first letter in uppercase */}
                             <td>{job.category_name}</td>
                             <td>
-                                <StyledButton>Modifier</StyledButton>
+                                <StyledButton onClick={() => handleUpdate(job.id)}>Modifier</StyledButton>
                             </td>
                             <td>
                                 {/* Passing an arrow function avoid the handleDelete() function to be runned  right away and only when clicking the button*/}

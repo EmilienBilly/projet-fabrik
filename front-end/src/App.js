@@ -1,9 +1,10 @@
-import Home from "./routes/Home";
-import JobDetails from "./routes/JobDetails";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import AdminPanel from "./routes/AdminPanel";
 import { JobsContextProvider } from "./context/JobsContext";
+import Home from "./routes/Home";
+import JobDetails from "./routes/JobDetails";
+import AdminPanel from "./routes/AdminPanel";
+import Update from "./routes/Update";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/:id" element={<JobDetails />} />
                     <Route path="/admin" element={<AdminPanel />} />
+                    <Route path="/admin/:id/update" element={<Update />} />
                 </Routes>
             </BrowserRouter>
         </JobsContextProvider>
