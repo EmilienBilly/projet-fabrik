@@ -4,10 +4,44 @@ import styled from "styled-components";
 import JobsFinder from "../api/JobsFinder";
 
 const StyledButton = styled.button`
+    width: 100px;
+    height: 50px;
     border-radius: 0.2rem;
     border: none;
     background-color: #c8e6c9;
     color: #388e3c;
+    font-size: 1rem;
+    font-weight: 600;
+`;
+
+const StyledForm = styled.form`
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+`;
+
+const StyledFormGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+
+    label {
+        padding: 0.5rem 0;
+    }
+
+    input {
+        height: 30px;
+        font-size: 16px;
+    }
+`;
+
+const StyledDescription = styled.textarea`
+    min-width: 100%;
+    max-width: 100%;
+    height: 200px;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.1rem;
+    line-height: 25px;
 `;
 
 const UpdateForm = () => {
@@ -32,25 +66,26 @@ const UpdateForm = () => {
 
     return (
         <>
-            <form action="">
-                <div>
+            <StyledForm action="">
+                <StyledFormGroup>
                     <label htmlFor="job">Métier</label>
                     <input value={name} onChange={(e) => setName(e.target.value)} type="text" />
-                </div>
-                <div>
-                    <label htmlFor="description">Description</label>
-                    <input value={description} onChange={(e) => setDescription(e.target.value)} type="text" />
-                </div>
-                <div>
+                </StyledFormGroup>
+
+                <StyledFormGroup>
                     <label htmlFor="video">Vidéo</label>
-                    <input value={video} onChange={(e) => setVideo(e.target.value)} type="text" />
-                </div>
-                <div>
+                    <input value={video} onChange={(e) => setVideo(e.target.value)} type="url" />
+                </StyledFormGroup>
+                <StyledFormGroup>
                     <label htmlFor="category">Catégorie</label>
                     <input value={category} onChange={(e) => setCategory(e.target.value)} type="text" />
-                </div>
+                </StyledFormGroup>
+                <StyledFormGroup>
+                    <label htmlFor="description">Description</label>
+                    <StyledDescription value={description} onChange={(e) => setDescription(e.target.value)} type="text" />
+                </StyledFormGroup>
                 <StyledButton>Enregistrer</StyledButton>
-            </form>
+            </StyledForm>
         </>
     );
 };
