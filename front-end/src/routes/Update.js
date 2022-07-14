@@ -1,12 +1,13 @@
 import Navbar from "../components/Navbar";
 import Title from "../components/Title";
+import UpdateForm from "../components/UpdateForm";
 
 const Update = () => {
     return (
         <>
             <Navbar />
-            {/* <h1>Update</h1> */}
             <Title title="Mise à jour" />
+            <UpdateForm />
         </>
     );
 };

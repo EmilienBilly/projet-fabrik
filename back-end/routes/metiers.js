@@ -7,7 +7,7 @@ const router = express.Router();
 // GET all the jobs
 router.get("/", async (req, res) => {
     try {
-        const jobsResults = await db.query("SELECT jobs.*, categories.name AS category_name FROM jobs  JOIN categories ON categories.id = category_id;");
+        const jobsResults = await db.query("SELECT jobs.*, categories.name AS category_name FROM jobs JOIN categories ON categories.id = category_id;");
         res.json({
             data: {
                 jobs: jobsResults.rows,
@@ -21,13 +21,16 @@ router.get("/", async (req, res) => {
 // GET one job
 router.get("/:id", async (req, res) => {
     try {
-        const jobsResults = await db.query("select * from jobs where id = $1", [req.params.id]); // parameterized query - [req.params.id] will replace $1
+        const jobsResults = await db.query(
+            "SELECT jobs.*, categories.name AS category_name FROM jobs JOIN categories ON categories.id = category_id AND jobs.id = $1",
+            [req.params.id]
+        ); // parameterized query - [req.params.id] will replace $1
         // parameterized query is used to avoid string concatenation which can lead to sql injection vulnerabilities
-
         const degreesResults = await db.query("select * from degrees where job_id = $1", [req.params.id]);
         res.json({
             data: {
                 jobs: jobsResults.rows[0],
+                category: jobsResults.rows[0].category_name,
                 degrees: degreesResults.rows,
             },
         });

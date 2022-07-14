@@ -8,7 +8,7 @@ const StyledNav = styled(motion.nav)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px auto 0;
+    margin: 2rem auto 0;
 
     div {
         display: flex;
