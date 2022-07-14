@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import JobList from "../components/JobList";
-import Navbar from "../components/Navbar";
-import styled from "styled-components";
+import { JobsContext } from "../context/JobsContext";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import JobsFinder from "../api/JobsFinder";
-import { JobsContext } from "../context/JobsContext";
+import styled from "styled-components";
+import JobList from "../components/JobList";
+import Navbar from "../components/Navbar";
+import Title from "../components/Title";
 
 const backColor = {
     alimentation: "#85B36B;",
@@ -104,7 +105,7 @@ const Home = (props) => {
             <Navbar />
             <StyledWrapper>
                 <StyledCategories>
-                    <h1>FABRIK DES METIERS</h1>
+                    <Title title="FABRIK DES MÉTIERS" />
                     <p>Découvre les métiers de l'Artisanat et leurs formations</p>
                 </StyledCategories>
                 <AnimatePresence>
