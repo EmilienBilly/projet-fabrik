@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import JobsFinder from "../api/JobsFinder";
 
@@ -15,9 +15,10 @@ const StyledButton = styled.button`
 `;
 
 const StyledForm = styled.form`
-    width: 80%;
+    width: 60%;
     display: flex;
     flex-direction: column;
+    padding-bottom: 3rem;
 `;
 
 const StyledFormGroup = styled.div`
@@ -44,12 +45,22 @@ const StyledDescription = styled.textarea`
     line-height: 25px;
 `;
 
+const StyledDegrees = styled.input`
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    font-size: 1.3rem;
+    padding: 1rem;
+`;
+
 const UpdateForm = () => {
+    let navigate = useNavigate();
     const { id } = useParams();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [video, setVideo] = useState("");
     const [category, setCategory] = useState("");
+    const [categoryId, setCategoryId] = useState("");
     const [degrees, setDegrees] = useState("");
 
     useEffect(() => {
@@ -60,9 +71,23 @@ const UpdateForm = () => {
             setDescription(response.data.data.jobs.description);
             setVideo(response.data.data.jobs.video);
             setCategory(response.data.data.category);
+            setDegrees(response.data.data.degrees);
+            setCategoryId(response.data.data.jobs.category_id);
         };
         fetch();
     }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const updatedJobs = await JobsFinder.put(`/${id}`, {
+            name,
+            description,
+            video,
+            category_id: categoryId,
+        });
+        navigate("/admin");
+        console.log(updatedJobs);
+    };
 
     return (
         <>
@@ -78,13 +103,16 @@ const UpdateForm = () => {
                 </StyledFormGroup>
                 <StyledFormGroup>
                     <label htmlFor="category">Catégorie</label>
-                    <input value={category} onChange={(e) => setCategory(e.target.value)} type="text" />
+                    <input value={`${categoryId} - ${category}`} onChange={(e) => setCategory(e.target.value)} type="text" />
                 </StyledFormGroup>
                 <StyledFormGroup>
                     <label htmlFor="description">Description</label>
                     <StyledDescription value={description} onChange={(e) => setDescription(e.target.value)} type="text" />
                 </StyledFormGroup>
-                <StyledButton>Enregistrer</StyledButton>
+                {/* {degrees && degrees.map((degree) => <StyledDegrees key={degree.id} value={degree.name} />)} */}
+                <StyledButton type="submit" onClick={handleSubmit}>
+                    Enregistrer
+                </StyledButton>
             </StyledForm>
         </>
     );

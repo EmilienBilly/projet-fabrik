@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import JobsFinder from "../api/JobsFinder";
 import styled from "styled-components";
 import { JobsContext } from "../context/JobsContext";

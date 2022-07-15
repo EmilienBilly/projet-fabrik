@@ -39,6 +39,27 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+// Update a job
+router.put("/:id", async (req, res) => {
+    try {
+        const results = await db.query("UPDATE jobs SET name = $1, description = $2, video = $3, category_id = $4 WHERE id = $5 RETURNING *", [
+            req.body.name,
+            req.body.description,
+            req.body.video,
+            req.body.category_id,
+            req.params.id,
+        ]);
+        res.status(200).json({
+            status: "success",
+            data: {
+                jobs: results.rows[0],
+            },
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // Create a job
 router.post("/", async (req, res) => {
     try {
