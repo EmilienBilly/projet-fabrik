@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const metiersRoutes = require("./routes/metiers");
+const jwtAuth = require("./routes/jwtAuth");
 const cors = require("cors");
 
 // Express app
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/metiers", metiersRoutes);
+app.use("/auth", jwtAuth);
 
 // listen for requests
 app.listen(process.env.PORT, () => {});
