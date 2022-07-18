@@ -2,9 +2,10 @@ const router = require("express").Router();
 const db = require("../db");
 const bcrypt = require("bcrypt");
 const jwtGenerator = require("../jwtGenerator");
+const validInformation = require("../middleware/validInformation");
 
 // register route
-router.post("/register", async (req, res) => {
+router.post("/register", validInformation, async (req, res) => {
     try {
         const user = await db.query("SELECT * FROM users WHERE email = $1", [req.body.email]);
 
@@ -18,7 +19,7 @@ router.post("/register", async (req, res) => {
         const bcryptPassword = await bcrypt.hash(req.body.password, salt);
 
         const newUser = await db.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *", [
-            req.body.name,
+            req.body.username,
             req.body.email,
             bcryptPassword,
         ]);
@@ -31,7 +32,7 @@ router.post("/register", async (req, res) => {
 });
 
 // login route
-router.post("/login", async (req, res) => {
+router.post("/login", validInformation, async (req, res) => {
     try {
         const user = await db.query("SELECT * FROM users WHERE email = $1", [req.body.email]);
         if (user.rows.length === 0) {
