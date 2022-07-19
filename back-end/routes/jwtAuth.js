@@ -3,6 +3,7 @@ const db = require("../db");
 const bcrypt = require("bcrypt");
 const jwtGenerator = require("../jwtGenerator");
 const validInformation = require("../middleware/validInformation");
+const authorization = require("../middleware/authorization");
 
 // register route
 router.post("/register", validInformation, async (req, res) => {
@@ -54,6 +55,13 @@ router.post("/login", validInformation, async (req, res) => {
     }
 });
 
+router.get("/verify", authorization, async (req, res) => {
+    try {
+        res.json(true);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+    }
+});
+
 module.exports = router;
-
-
