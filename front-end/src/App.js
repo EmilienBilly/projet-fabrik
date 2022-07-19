@@ -1,10 +1,13 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { JobsContextProvider } from "./context/JobsContext";
 import Home from "./routes/Home";
 import JobDetails from "./routes/JobDetails";
 import AdminPanel from "./routes/AdminPanel";
 import Update from "./routes/Update";
+import Login from "./routes/Login";
+import Register from "./routes/Register";
+import { useState } from "react";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -27,6 +30,7 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     return (
         <JobsContextProvider>
             <GlobalStyles />
@@ -34,8 +38,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/:id" element={<JobDetails />} />
-                    <Route path="/admin" element={<AdminPanel />} />
-                    <Route path="/admin/:id/update" element={<Update />} />
+                    <Route path="/admin" element={isAuthenticated ? <AdminPanel /> : <Navigate replace to="/login" />} />
+                    <Route path="/admin/:id/update" element={isAuthenticated ? <Update /> : <Navigate replace to="/login" />} />
+                    <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate replace to="/admin" />} />
+                    <Route path="/register" element={isAuthenticated ? <Register /> : <Navigate replace to="/login" />} />
                 </Routes>
             </BrowserRouter>
         </JobsContextProvider>
