@@ -31,6 +31,9 @@ const GlobalStyles = createGlobalStyle`
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const setAuth = (boolean) => {
+        setIsAuthenticated(boolean);
+    };
     return (
         <JobsContextProvider>
             <GlobalStyles />
@@ -38,10 +41,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/:id" element={<JobDetails />} />
-                    <Route path="/admin" element={isAuthenticated ? <AdminPanel /> : <Navigate replace to="/login" />} />
+                    <Route path="/admin" element={isAuthenticated ? <AdminPanel setAuth={setAuth} /> : <Navigate replace to="/login" />} />
                     <Route path="/admin/:id/update" element={isAuthenticated ? <Update /> : <Navigate replace to="/login" />} />
-                    <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate replace to="/admin" />} />
-                    <Route path="/register" element={isAuthenticated ? <Register /> : <Navigate replace to="/login" />} />
+                    <Route path="/login" element={!isAuthenticated ? <Login setAuth={setAuth} /> : <Navigate replace to="/admin" />} />
+                    <Route path="/register" element={isAuthenticated ? <Register setAuth={setAuth} /> : <Navigate replace to="/login" />} />
                 </Routes>
             </BrowserRouter>
         </JobsContextProvider>
