@@ -44,7 +44,7 @@ function App() {
                     <Route path="/admin" element={isAuthenticated ? <AdminPanel setAuth={setAuth} /> : <Navigate replace to="/login" />} />
                     <Route path="/admin/:id/update" element={isAuthenticated ? <Update /> : <Navigate replace to="/login" />} />
                     <Route path="/login" element={!isAuthenticated ? <Login setAuth={setAuth} /> : <Navigate replace to="/admin" />} />
-                    <Route path="/register" element={isAuthenticated ? <Register setAuth={setAuth} /> : <Navigate replace to="/login" />} />
+                    <Route path="/register" element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Navigate replace to="/login" />} />
                 </Routes>
             </BrowserRouter>
         </JobsContextProvider>

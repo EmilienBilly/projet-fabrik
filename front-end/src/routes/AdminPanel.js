@@ -11,13 +11,19 @@ const StyledContainer = styled.div`
     align-items: center;
 `;
 
-const AdminPanel = () => {
+const AdminPanel = ({ setAuth }) => {
+    const logout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem("token");
+        setAuth(false);
+    };
     return (
         <>
             <Navbar />
             <StyledContainer>
                 <Title title="Panel d'administration" />
                 <div>
+                    <button onClick={(e) => logout(e)}>Déconnexion</button>
                     <AddJobsForm />
                     <JobsTable />
                 </div>
