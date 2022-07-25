@@ -7,7 +7,8 @@ import AdminPanel from "./routes/AdminPanel";
 import Update from "./routes/Update";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Authentication from "./api/Authentication";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -34,6 +35,23 @@ function App() {
     const setAuth = (boolean) => {
         setIsAuthenticated(boolean);
     };
+
+    const isAuth = async () => {
+        try {
+            const response = await Authentication.get("/verify", { headers: { token: localStorage.token } });
+
+            console.log(response);
+
+            response.data === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+            console.log(isAuthenticated);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+    useEffect(() => {
+        isAuth();
+    });
+
     return (
         <JobsContextProvider>
             <GlobalStyles />
