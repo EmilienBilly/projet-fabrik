@@ -7,15 +7,15 @@ module.exports = function (req, res, next) {
 
     if (req.path === "/register") {
         if (![email, username, password].every(Boolean)) {
-            return res.status(401).json("Email ou mot de passe manquant");
+            return res.json("Email ou mot de passe manquant");
         } else if (!validEmail(email)) {
-            return res.status(401).json("Addresse Email non valide");
+            return res.json("Addresse Email non valide");
         }
     } else if (req.path === "/login") {
         if (![email, password].every(Boolean)) {
-            return res.status(401).json("Email ou mot de passe manquant");
+            return res.json("Email ou mot de passe manquant");
         } else if (!validEmail(email)) {
-            return res.status(401).json("Addresse Email non valide");
+            return res.json("Addresse Email non valide");
         }
     }
 

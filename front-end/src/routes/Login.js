@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import Authentication from "../api/Authentication";
 
+import { toast } from "react-toastify";
+
 const Container = styled.div`
     margin: auto;
 `;
@@ -58,13 +60,13 @@ const Login = ({ setAuth }) => {
             if (response.data.token) {
                 localStorage.setItem("token", response.data.token);
                 setAuth(true);
+                toast.success("Connexion réussie !");
             } else {
                 setAuth(false);
             }
-            console.log(body);
-            console.log(response);
         } catch (err) {
             console.error(err.message);
+            toast.error("Email ou mot de passe incorrect");
         }
     };
 

@@ -37,17 +37,16 @@ router.post("/login", validInformation, async (req, res) => {
     try {
         const user = await db.query("SELECT * FROM users WHERE email = $1", [req.body.email]);
         if (user.rows.length === 0) {
-            return res.status(401).json("Mot de passe ou email incorrect");
+            return res.status(401).send("Mot de passe ou email incorrect");
         }
 
         const correctPassword = await bcrypt.compare(req.body.password, user.rows[0].password);
 
         if (!correctPassword) {
-            return res.status(401).json("Mot de passe ou email incorrect");
+            return res.status(401).send("Mot de passe ou email incorrect");
         }
 
         const token = jwtGenerator(user.rows[0].id);
-        console.log(user);
         res.json({ token });
     } catch (err) {
         console.error(err.message);

@@ -1,14 +1,17 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { JobsContextProvider } from "./context/JobsContext";
+import { useState, useEffect } from "react";
 import Home from "./routes/Home";
 import JobDetails from "./routes/JobDetails";
 import AdminPanel from "./routes/AdminPanel";
 import Update from "./routes/Update";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
-import { useState, useEffect } from "react";
 import Authentication from "./api/Authentication";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -65,6 +68,7 @@ function App() {
                     <Route path="/register" element={!isAuthenticated ? <Register setAuth={setAuth} /> : <Navigate replace to="/login" />} />
                 </Routes>
             </BrowserRouter>
+            <ToastContainer />
         </JobsContextProvider>
     );
 }
