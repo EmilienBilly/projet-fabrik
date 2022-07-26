@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Title from "../components/Title";
 import styled from "styled-components";
 import { useState } from "react";
+import Authentication from "../api/Authentication";
 
 const Container = styled.div`
     margin: auto;
@@ -52,21 +53,16 @@ const Login = ({ setAuth }) => {
         e.preventDefault();
         try {
             const body = { email, password };
-            const response = await fetch("http://localhost:4000/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-            });
+            const response = await Authentication.post("/login", body);
 
-            const parsedResponse = await response.json();
-
-            if (parsedResponse.token) {
-                localStorage.setItem("token", parsedResponse.token);
+            if (response.data.token) {
+                localStorage.setItem("token", response.data.token);
                 setAuth(true);
             } else {
                 setAuth(false);
             }
-            console.log(parsedResponse);
+            console.log(body);
+            console.log(response);
         } catch (err) {
             console.error(err.message);
         }
@@ -88,5 +84,3 @@ const Login = ({ setAuth }) => {
 };
 
 export default Login;
-
-
